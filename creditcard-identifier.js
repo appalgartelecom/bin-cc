@@ -81,16 +81,8 @@ function findBrand(cardNumber) {
         cardNumber = '000000';
     }
     let filteredBrands = brands.filter(cardNumberFilter.bind(this, cardNumber));
-    if(filteredBrands === undefined) {
-      return undefined;
-    }
-
-    let eloIndex = filteredBrands.map(b => b.name).indexOf('elo')
-    if(eloIndex > -1) {
-      return filteredBrands[eloIndex].name;
-    }
-    let brand = ( filteredBrands.length > 1) ? undefined : filteredBrands[0];
-    brand = (brand === undefined) ? undefined : brand.name
+    let brand = ( filteredBrands === undefined ) ? undefined : filteredBrands[0];
+    brand = (brand === undefined) ? undefined : brand.name;
     return brand;
 }
 
