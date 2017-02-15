@@ -10,6 +10,11 @@ let brands = [{
     regexpBin: '^3(?:0[0-5]|[68][0-9])',
     regexpFull: '^3(?:0[0-5]|[68][0-9])[0-9]{11}$',
     regexpCvv: '^\d{3}$',
+}, {
+    name: 'policard',
+    regexpBin: '^603078',
+    regexpFull: '^(603078[0-9]{10})$',
+    regexpCvv: '^\d{3}$',
 },
 // {
 //     name: 'discover',
