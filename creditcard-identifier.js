@@ -10,27 +10,33 @@ let brands = [{
     regexpBin: '^3(?:0[0-5]|[68][0-9])',
     regexpFull: '^3(?:0[0-5]|[68][0-9])[0-9]{11}$',
     regexpCvv: '^\d{3}$',
-}, {
-    name: 'discover',
-    regexpBin: '^6(?:011|5[0-9]{2})',
-    regexpFull: '^6(?:011|5[0-9]{2})[0-9]{12}$',
-    regexpCvv: '^\d{3}$',
-}, {
+},
+// {
+//     name: 'discover',
+//     regexpBin: '^6(?:011|5[0-9]{2})',
+//     regexpFull: '^6(?:011|5[0-9]{2})[0-9]{12}$',
+//     regexpCvv: '^\d{3}$',
+// },
+{
     name: 'hipercard',
     regexpBin: '^3841[046]0|^60',
     regexpFull: '^(38[0-9]{17}|60[0-9]{14})$',
     regexpCvv: '^\d{3}$',
-}, {
-    name: 'amex',
-    regexpBin: '^3[47]',
-    regexpFull: '^3[47][0-9]{13}$',
-    regexpCvv: '^\d{3,4}$',
-},  {
-    name: 'aura',
-    regexpBin: '^50[0-9]',
-    regexpFull: '^50[0-9]{14,17}$',
-    regexpCvv: '^\d{3}$',
-}, {
+},
+// {
+//     name: 'amex',
+//     regexpBin: '^3[47]',
+//     regexpFull: '^3[47][0-9]{13}$',
+//     regexpCvv: '^\d{3,4}$',
+// },
+// {
+//     name: 'aura',
+//     regexpBin: '^50[0-9]',
+//     regexpFull: '^50[0-9]{14,17}$',
+//     regexpCvv: '^\d{3}$',
+// },
+
+{
     name: 'mastercard',
     regexpBin: '^5[1-5][0-9][0-9]',
     regexpFull: '^5[1-5][0-9]{14}$',
@@ -47,7 +53,9 @@ function cardNumberFilter(cardNumber, brand) {
         throw Error('Card number should be a string');
     }
 
-    return cardNumber.match(brand.regexpFull) !== null;
+    // return cardNumber.match(brand.regexpFull) !== null;
+    return cardNumber.match(brand.regexpBin) !== null;
+
 }
 
 function cardNameFilter(brandName, brand) {
@@ -67,14 +75,10 @@ function findBrand(cardNumber) {
     if(!cardNumber || cardNumber === '') {
         cardNumber = '000000';
     }
-    let brand = brands.filter(cardNumberFilter.bind(this, cardNumber))[0];
+    let filteredBrands = brands.filter(cardNumberFilter.bind(this, cardNumber));
 
-    if (brand === undefined) {
-        throw Error('card number not supported');
-    }
-
+    let brand = (filteredBrands === undefined || filteredBrands.length > 1) ? undefined : filteredBrands[0];
     brand = (brand === undefined) ? undefined : brand.name;
-
     return brand;
 }
 
@@ -95,5 +99,3 @@ module.exports = {
     isSupported: isSupported,
     hipercardRegexp: hipercardRegexp
 }
-
-
